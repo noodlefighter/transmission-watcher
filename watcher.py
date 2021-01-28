@@ -1,6 +1,8 @@
 
 import time
 import os
+import argparse
+
 from transmission_rpc import *
 
 # configs
@@ -41,8 +43,12 @@ def do_watch(watch_dir, download_dir):
             except:
                 print('Unexpected error')
 
+parser = argparse.ArgumentParser()
+parser.add_argument('--oneshot', action='store_true', help='just run a single time')
+args = parser.parse_args()
+
 print('transmission-watcher startup!')
-while True:
+while not args.oneshot:
     for d in subdirs:
         src_dir = base_watch_dir + '/' + d
         dst_dir = base_download_dir + '/' + d
