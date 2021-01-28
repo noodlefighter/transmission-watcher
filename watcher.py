@@ -47,11 +47,14 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--oneshot', action='store_true', help='just run a single time')
 args = parser.parse_args()
 
-print('transmission-watcher startup!')
-while not args.oneshot:
+while True:
     for d in subdirs:
         src_dir = base_watch_dir + '/' + d
         dst_dir = base_download_dir + '/' + d
         if os.path.exists(src_dir):
             do_watch(src_dir, dst_dir)
+
+    if args.oneshot:
+        break
+
     time.sleep(check_interval)
